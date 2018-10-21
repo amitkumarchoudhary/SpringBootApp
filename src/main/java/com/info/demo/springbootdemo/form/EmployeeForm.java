@@ -31,5 +31,12 @@ public class EmployeeForm {
 	public void setSalary(Double salary) {
 		this.salary = salary;
 	}
+	@Override
+	public String toString() {
+		return "EmployeeForm [id=" + id + ", name=" + name + ", salary=" + salary + ", address=" + address + "]";
+	}
+	
+	
+	
 	
 }

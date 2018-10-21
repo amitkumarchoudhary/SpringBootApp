@@ -1,5 +1,7 @@
 package com.info.demo.springbootdemo.dao;
 
+import java.util.List;
+
 import com.info.demo.springbootdemo.domain.Employee;
 
 public interface EmployeeDaoJD extends java.util.function.IntFunction<Employee>{
@@ -9,5 +11,7 @@ public interface EmployeeDaoJD extends java.util.function.IntFunction<Employee>{
 	default Employee apply(int arg0) {
 		return null;
 	}
+
+	List<Employee> findUserByJDAll();
 
 }

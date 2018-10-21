@@ -1,0 +1,8 @@
+-Dspring.profiles.active=prod
+spring.profiles.active=dev
+
+
+landpage URL :-- http://localhost:9090/
+
+http://localhost:9090/listPageable?page=0&size=3&sort=name 
+

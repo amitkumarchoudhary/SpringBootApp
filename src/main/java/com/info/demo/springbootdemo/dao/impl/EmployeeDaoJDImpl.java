@@ -1,5 +1,7 @@
 package com.info.demo.springbootdemo.dao.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,11 @@ public class EmployeeDaoJDImpl implements EmployeeDaoJD{
 		return jdbcTemplate.queryForObject(Constant.FETCH_BY_ID, new Object[]{userId},new EmployeeMapper());
 	}
 	
+	@Override
+	public List<Employee> findUserByJDAll() {
+		return jdbcTemplate.query(Constant.FETCH_BY_All,new EmployeeMapper());
+	}
 	
-
+	
+	
 }

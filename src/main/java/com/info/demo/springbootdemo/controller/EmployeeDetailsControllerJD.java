@@ -1,5 +1,7 @@
 package com.info.demo.springbootdemo.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,30 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 		try {
 			
 			 ss= employeeServiceJD.getEmployeeService(id);
+				 if(ss==null){
+					 logger.info("LandingPageController....."+ss);
+					 return new ResponseEntity(ss,HttpStatus.NOT_FOUND);
+					 
+				 }
+			     
+			
+			return new ResponseEntity(ss,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("Error adding LandingPageController", e);
+			return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+			 
+		}
+		
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value="/getAllempdetailsbyidJD" , method= RequestMethod.GET)
+	public ResponseEntity<Employee> getAllJDEmployeeDetails(){
+		
+		List<Employee> ss = null;
+		try {
+			
+			 ss= employeeServiceJD.getAllJDEmployeeService();
 				 if(ss==null){
 					 logger.info("LandingPageController....."+ss);
 					 return new ResponseEntity(ss,HttpStatus.NOT_FOUND);

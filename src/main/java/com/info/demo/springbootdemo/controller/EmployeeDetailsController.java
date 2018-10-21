@@ -110,6 +110,17 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value="/updateEmployeeDetails" , method= RequestMethod.PUT)
+	public ResponseEntity updateEmployeeDetails(@RequestBody EmployeeForm empForm){
+		
+		    logger.info("updateEmployeeDetails....."+empForm);
+			return new ResponseEntity(empForm,HttpStatus.OK);
+			 
+	}
+		
+	
+	
 	
 	
 	

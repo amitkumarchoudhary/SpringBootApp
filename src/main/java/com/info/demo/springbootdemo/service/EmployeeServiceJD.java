@@ -8,4 +8,5 @@ import com.info.demo.springbootdemo.form.EmployeeForm;
 public interface EmployeeServiceJD {
 
 	public Employee getEmployeeService(Integer id);
+	public List<Employee> getAllJDEmployeeService();
 }

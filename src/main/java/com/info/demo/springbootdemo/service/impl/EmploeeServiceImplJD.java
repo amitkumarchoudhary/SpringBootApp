@@ -1,5 +1,7 @@
 package com.info.demo.springbootdemo.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,12 @@ public class EmploeeServiceImplJD implements EmployeeServiceJD{
 	
 	@Override
 	public Employee getEmployeeService(Integer id) {
-		
 		return employeeDaoJD.findUserById(id);
+	}
+
+	@Override
+	public List<Employee> getAllJDEmployeeService() {
+		return employeeDaoJD.findUserByJDAll();
 	}
 
 	
