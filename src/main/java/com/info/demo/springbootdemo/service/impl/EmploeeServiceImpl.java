@@ -70,5 +70,17 @@ public class EmploeeServiceImpl implements EmployeeService{
 		
 	}
 
+
+	@Override
+	public void updateEmployeeService(EmployeeForm empForm) {
+		Employee ee=new Employee();
+		ee.setId(empForm.getId());
+		ee.setName(empForm.getName());
+		ee.setSalary(empForm.getSalary());
+		ee.setAddress(empForm.getAddress());
+		employeeDao.save(ee);
+		
+	}
+
 	
 }

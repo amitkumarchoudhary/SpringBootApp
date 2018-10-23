@@ -114,8 +114,17 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 	@RequestMapping(value="/updateEmployeeDetails" , method= RequestMethod.PUT)
 	public ResponseEntity updateEmployeeDetails(@RequestBody EmployeeForm empForm){
 		
-		    logger.info("updateEmployeeDetails....."+empForm);
-			return new ResponseEntity(empForm,HttpStatus.OK);
+			
+			try {
+				  employeeService.updateEmployeeService(empForm);
+				logger.info("updateEmployeeDetails....."+empForm);
+				
+				return new ResponseEntity(HttpStatus.OK);
+			} catch (Exception e) {
+				logger.debug("Error adding LandingPageController", e);
+				return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+				 
+			}
 			 
 	}
 		

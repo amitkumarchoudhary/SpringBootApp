@@ -1,25 +1,29 @@
 package com.info.demo.springbootdemo.domain;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.TableGenerator;
 
 @Entity
-public class Login {
+public class Login implements Serializable{
 
 	@Id
-	private Integer id;
+	private Integer userId;
 	private String password;
 	private String email;
 	private String address;
 	private Integer mobile;
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getPassword() {
 		return password;
@@ -47,16 +51,9 @@ public class Login {
 	}
 	@Override
 	public String toString() {
-		return "Login [id=" + id + ", password=" + password + ", email=" + email + ", address=" + address + ", mobile="
-				+ mobile + "]";
+		return "Login [userId=" + userId + ", password=" + password + ", email=" + email + ", address=" + address
+				+ ", mobile=" + mobile + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

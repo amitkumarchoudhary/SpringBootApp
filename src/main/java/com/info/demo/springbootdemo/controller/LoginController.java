@@ -17,6 +17,7 @@ import com.info.demo.springbootdemo.domain.Login;
 import com.info.demo.springbootdemo.form.EmployeeForm;
 import com.info.demo.springbootdemo.form.LoginForm;
 import com.info.demo.springbootdemo.form.LoginSignForm;
+import com.info.demo.springbootdemo.service.AgsidUserService;
 import com.info.demo.springbootdemo.service.EmployeeService;
 import com.info.demo.springbootdemo.service.LoginService;
 
@@ -28,6 +29,9 @@ private Logger logger=Logger.getLogger(LoginController.class);
 	
     @Autowired
     private LoginService loginService;	
+    
+    @Autowired
+    private AgsidUserService agsidUserService;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value="/saveloginform" , method= RequestMethod.POST)
@@ -35,6 +39,7 @@ private Logger logger=Logger.getLogger(LoginController.class);
 		
 		logger.info("saveLoginData................"+loginForm);
 		loginService.saveLoginService(loginForm);
+		agsidUserService.saveAgsidUser(loginForm);
 		
 		return new ResponseEntity(HttpStatus.OK);
 		
@@ -46,15 +51,18 @@ private Logger logger=Logger.getLogger(LoginController.class);
 		logger.info("getLoginSignInfo................"+loginSignForm);
 		Login objLogin=loginService.getLoginService(loginSignForm);
 		logger.info("objLogin is call...."+objLogin);
-		
-		if(objLogin.getId().equals(loginSignForm.getId()) && objLogin.getPassword().equals(loginSignForm.getPassword())){
-			logger.info("User && PassWord is valid.........");
+		if(objLogin!=null){
+			if(objLogin.getUserId().equals(loginSignForm.getId()) && objLogin.getPassword().equals(loginSignForm.getPassword())){
+				logger.info("User && PassWord is valid.........");
 			return new ResponseEntity(objLogin,HttpStatus.OK);
+			}else{
+				logger.info("User || PassWord is Not  valid.......");
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}else{
-			logger.info("User && PassWord is Not  valid.......");
+			logger.info("objLogin is null.......");
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 		
 	}
 		

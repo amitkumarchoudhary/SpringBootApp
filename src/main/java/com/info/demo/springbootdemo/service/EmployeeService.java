@@ -11,4 +11,6 @@ public interface EmployeeService {
 	public List<Employee> getAllEmployeeService();
 	public void saveEmployeeService(EmployeeForm ee);
 	public void deleteEmployeeService(Integer ee);
+	public void updateEmployeeService(EmployeeForm ee);
+	
 }

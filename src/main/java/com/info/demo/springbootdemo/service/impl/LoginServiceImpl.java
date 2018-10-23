@@ -21,7 +21,7 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public void saveLoginService(LoginForm ee) {
 		Login ll=new Login();
-		ll.setId(ee.getId());
+		ll.setUserId(ee.getUserId());
 		ll.setPassword(ee.getPassword());
 		ll.setEmail(ee.getEmail());
 		ll.setMobile(ee.getMobile());
