@@ -7,6 +7,13 @@ public class EmployeeForm {
 	private String name;
 	private Double salary;
 	private String address;
+	private String filelocation;
+	public String getFilelocation() {
+		return filelocation;
+	}
+	public void setFilelocation(String filelocation) {
+		this.filelocation = filelocation;
+	}
 	public String getAddress() {
 		return address;
 	}
@@ -33,7 +40,8 @@ public class EmployeeForm {
 	}
 	@Override
 	public String toString() {
-		return "EmployeeForm [id=" + id + ", name=" + name + ", salary=" + salary + ", address=" + address + "]";
+		return "EmployeeForm [id=" + id + ", name=" + name + ", salary=" + salary + ", address=" + address
+				+ ", filelocation=" + filelocation + "]";
 	}
 	
 	

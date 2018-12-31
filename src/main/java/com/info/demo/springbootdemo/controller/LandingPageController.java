@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.info.demo.springbootdemo.domain.Employee;
 import com.info.demo.springbootdemo.exception.ServiceDemoException;
+import com.info.demo.springbootdemo.form.EmployeeForm;
 import com.info.demo.springbootdemo.service.EmployeeService;
 import com.info.demo.springbootdemo.service.impl.EmploeeServiceImpl;
 
@@ -35,4 +36,32 @@ public class LandingPageController {
 		logger.info("LandingPageController getLandingpage called...");
 		return welcomemessage;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/api/javainuse")
+	public String sayHello() {
+		return "Swagger Hello World";
+	}
+	@RequestMapping(method = RequestMethod.GET, value = "/api/javainuse/use")
+	public String sayHello2() {
+		return "Swagger Hello World 2";
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value="/api/javainuse/saveEmployeeDetailsswag" , method= RequestMethod.POST)
+	public ResponseEntity saveEmployeeDetailsswag(@RequestBody EmployeeForm empForm){
+		
+		
+		try {
+			  
+			logger.info("LandingPageController....."+empForm);
+			
+			return new ResponseEntity(empForm,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("Error adding LandingPageController", e);
+			return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+			 
+		}
+		
+	}
+	
 }

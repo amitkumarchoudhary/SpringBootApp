@@ -59,6 +59,7 @@ public class EmploeeServiceImpl implements EmployeeService{
 		ee.setName(empForm.getName());
 		ee.setSalary(empForm.getSalary());
 		ee.setAddress(empForm.getAddress());
+		ee.setFilelocation(empForm.getFilelocation());
 		
 		employeeDao.save(ee);
 	}
