@@ -1,12 +1,14 @@
 package com.info.demo.springbootdemo.exception;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -14,31 +16,41 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  
 @SuppressWarnings({"unchecked","rawtypes"})
 @ControllerAdvice
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler
+public class CustomExceptionHandler 
 {
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        details.add(ex.getLocalizedMessage());
-        ErrorResponse error = new ErrorResponse("Server Error", details);
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+//        List<String> details = new ArrayList<>();
+//        details.add(ex.getLocalizedMessage());
+//        ErrorResponse error = new ErrorResponse("Server Error", details);
+//        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+// 
+//    @ExceptionHandler(RecordNotFoundException.class)
+//    public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
+//        List<String> details = new ArrayList<>();
+//        details.add(ex.getLocalizedMessage());
+//        ErrorResponse error = new ErrorResponse("Record Not Found", details);
+//        return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+//    }
  
-    @ExceptionHandler(RecordNotFoundException.class)
-    public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        details.add(ex.getLocalizedMessage());
-        ErrorResponse error = new ErrorResponse("Record Not Found", details);
-        return new ResponseEntity(error, HttpStatus.NOT_FOUND);
-    }
- 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
-            details.add(error.getDefaultMessage());
-        }
-        ErrorResponse error = new ErrorResponse("Validation Failed", details);
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+//    @Override
+//    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+//        List<String> details = new ArrayList<>();
+//        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+//            details.add(error.getDefaultMessage());
+//        }
+//        ErrorResponse error = new ErrorResponse("Validation Failed", details);
+//        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+//    }
+    
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public  ResponseEntity<String> missingParamException(RequestParamNotFoundException ex, WebRequest request) {
+     
+    	 List<String> details = new ArrayList<>();
+         details.add(ex.getLocalizedMessage());
+         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
+        	        request.getDescription(false));
+         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
     }
 }

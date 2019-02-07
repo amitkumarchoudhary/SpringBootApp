@@ -6,3 +6,11 @@ landpage URL :-- http://localhost:9090/
 
 http://localhost:9090/listPageable?page=0&size=3&sort=name 
 
+INSERT INTO employee VALUES(12,'amit',2000,'raja bazar seikhpura','c://file/loction');
+INSERT INTO employee VALUES(3,'akc',3000,'raja bazar seikhpura','c://file/loction');
+INSERT INTO employee VALUES(4,'deepak',4000,'raja bazar seikhpura','c://file/loction');
+INSERT INTO employee VALUES(5,'suman',5000,'raja bazar seikhpura','c://file/loction');
+INSERT INTO employee VALUES(6,'ritu',6000,'raja bazar seikhpura','c://file/loction');
+INSERT INTO employee VALUES(7,'nitu',7000,'raja bazar seikhpura','c://file/loction');
+INSERT INTO employee VALUES(8,'raju',8000,'raja bazar seikhpura','c://file/loction');
+

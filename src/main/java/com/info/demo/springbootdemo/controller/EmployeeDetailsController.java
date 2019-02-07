@@ -1,5 +1,7 @@
 package com.info.demo.springbootdemo.controller;
 
+
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.info.demo.springbootdemo.domain.Employee;
 import com.info.demo.springbootdemo.domain.UploadFileResponse;
 import com.info.demo.springbootdemo.exception.RecordNotFoundException;
+import com.info.demo.springbootdemo.exception.RequestParamNotFoundException;
 import com.info.demo.springbootdemo.file.LoadFileStoreLocationService;
 import com.info.demo.springbootdemo.file.impl.FileStorageServiceImpl;
 import com.info.demo.springbootdemo.form.EmployeeForm;
@@ -33,11 +37,15 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins="*")
-@RestController
+@RestController 
+@RequestMapping(value="employee/details")
 public class EmployeeDetailsController {
 
 private Logger logger=Logger.getLogger(LandingPageController.class);
 	
+
+  
+   
 	@Autowired
 	private EmployeeService employeeService;
 	
@@ -47,35 +55,6 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 	@Autowired
 	private FileStorageServiceImpl fileStorageService;
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@ApiOperation(value="Retrieve the user sign info given the user's id")
-    @ApiResponses(value ={
-            @ApiResponse(code = 200, message = "Successfully retrieved user sign info"),
-            @ApiResponse(code = 204, message = "No user sign info found", response = String.class)
-    })
-//	@RequestMapping(value="/getempdetailsbyid/{id}" , method= RequestMethod.GET)
-	@GetMapping(
-            value = "/getempdetailsbyid/{id}")
-	public ResponseEntity<Employee> getEmployeeDetails(@Valid @PathVariable("id") int id){
-		
-		Employee ss = null;
-		try {
-			
-			 ss= employeeService.getEmployeeService(id);
-				 if(ss==null){
-					 throw new RecordNotFoundException("Invalid employee id : " + id);
-					 
-				 }
-			         return new ResponseEntity(ss,HttpStatus.OK);
-		} catch (Exception e) {
-			logger.debug("Error adding LandingPageController", e);
-			         return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
-			 
-		}
-		
-	}
-	
-	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 //	@RequestMapping(value="/getAllEmployeeDetails" , method= RequestMethod.GET)
 	@ApiOperation(value="Retrieve the user sign info given the user's id")
@@ -83,8 +62,8 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
             @ApiResponse(code = 200, message = "Successfully retrieved all user data info"),
             @ApiResponse(code = 404, message = "No data is found", response = String.class)
     })
-	@GetMapping(value="/getAllEmployeeDetails")
-	public ResponseEntity<Employee> getAllEmployeeDetails(){
+	@GetMapping
+	public ResponseEntity<Employee> getAllEmployeeDetails(){	
 		
 		List<Employee> ss = null;
 		try {
@@ -102,6 +81,48 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 		}
 		
 	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+//	@ApiOperation(value="Retrieve the user sign info given the user's id")
+//    @ApiResponses(value ={
+//            @ApiResponse(code = 200, message = "Successfully retrieved user sign info"),
+//            @ApiResponse(code = 204, message = "No user sign info found", response = String.class)
+//    })
+//	@RequestMapping(value="/getempdetailsbyid/{id}" , method= RequestMethod.GET)
+	@GetMapping(value="userById")
+	//public ResponseEntity<Employee> getEmployeeDetails(@RequestParam("id") int id){
+		public ResponseEntity<Employee> getEmployeeDetails(@RequestParam(required = false) int id,
+				@RequestParam(required = false ,defaultValue = "2019-01-01" ) String createdDate ){
+		
+//		System.out.println("...........date.........."+date);
+		Employee ss = null;
+		 ss= employeeService.getEmployeeServiceByIdDate(id ,createdDate);
+		try {
+			
+//			     Date d=new Date(id);
+//			         
+				 if(ss==null){
+					 throw new RequestParamNotFoundException("Invalid url request not valid ........");
+				
+					 
+				 }
+				 
+//				 if(id > 0){
+////					 throw new RecordNotFoundException("Invalid employee id : " + id);
+//					 ss= employeeService.getEmployeeServiceByIdDate(id);
+//					 
+//				 }
+			         return new ResponseEntity(ss,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("Error adding LandingPageController", e);
+			         return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+			 
+		}
+		
+	}
+	
+	
+	
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

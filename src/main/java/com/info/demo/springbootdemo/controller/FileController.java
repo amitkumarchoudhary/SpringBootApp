@@ -36,7 +36,7 @@ public class FileController {
     @Autowired
     private FileStorageServiceImpl fileStorageService;
     
-    @PostMapping(value="/uploadFile",headers="Accept=application/x-www-form-urlencoded")
+    @PostMapping(value="/uploadFile",consumes ={"application/json"})
     public UploadFileResponse uploadFile(@RequestBody FileFormData file) {
 //        String fileName = fileStorageService.storeFile(file);
     	System.out.println(".................file................"+file);
@@ -48,7 +48,7 @@ public class FileController {
 //
 //        return new UploadFileResponse(fileName, fileDownloadUri,
 //                file.getContentType(), file.getSize());
-    	return new UploadFileResponse(null, null, null, 0);
+    	return new UploadFileResponse();
     }
 
 //    @PostMapping("/uploadMultipleFiles")

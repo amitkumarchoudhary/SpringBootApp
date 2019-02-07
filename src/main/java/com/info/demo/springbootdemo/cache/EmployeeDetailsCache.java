@@ -21,7 +21,7 @@ public class EmployeeDetailsCache
             e.printStackTrace();
         }
  
-        return new Employee(1,"akc",2000d,"delhi","");
+        return new Employee();
     }
 }
 

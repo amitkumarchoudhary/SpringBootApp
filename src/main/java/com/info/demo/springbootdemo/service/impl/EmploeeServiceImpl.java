@@ -1,6 +1,8 @@
 package com.info.demo.springbootdemo.service.impl;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +34,19 @@ public class EmploeeServiceImpl implements EmployeeService{
 			 ee=employeeDao.findOne(id);
 		} catch (Exception e) {
 			throw new ServiceDemoException("EmploeeServiceImpl getEmployeeService in null");
+		}
+		
+		return ee;
+	}
+	
+	@Override
+	public Employee getEmployeeServiceByIdDate(int id , String createdDate) {
+		Employee ee=null;
+		
+		try {
+			 ee=employeeDao.findUserByIdDate(id , createdDate);
+		} catch (Exception e) {
+			throw new ServiceDemoException("EmploeeServiceImpl getEmployeeServiceByIdDate in null");
 		}
 		
 		return ee;

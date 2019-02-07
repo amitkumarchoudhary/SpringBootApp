@@ -7,6 +7,10 @@ public class UploadFileResponse {
     private String fileType;
     private long size;
 
+    public UploadFileResponse(){
+    	
+    }
+    
     public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
