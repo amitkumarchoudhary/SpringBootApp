@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ import com.info.demo.springbootdemo.exception.RequestParamNotFoundException;
 import com.info.demo.springbootdemo.file.LoadFileStoreLocationService;
 import com.info.demo.springbootdemo.file.impl.FileStorageServiceImpl;
 import com.info.demo.springbootdemo.form.EmployeeForm;
+import com.info.demo.springbootdemo.form.ObjectKey;
 import com.info.demo.springbootdemo.service.EmployeeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -43,9 +45,6 @@ public class EmployeeDetailsController {
 
 private Logger logger=Logger.getLogger(LandingPageController.class);
 	
-
-  
-   
 	@Autowired
 	private EmployeeService employeeService;
 	
@@ -89,30 +88,57 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 //            @ApiResponse(code = 204, message = "No user sign info found", response = String.class)
 //    })
 //	@RequestMapping(value="/getempdetailsbyid/{id}" , method= RequestMethod.GET)
+	
 	@GetMapping(value="userById")
-	//public ResponseEntity<Employee> getEmployeeDetails(@RequestParam("id") int id){
-		public ResponseEntity<Employee> getEmployeeDetails(@RequestParam(required = false) int id,
-				@RequestParam(required = false ,defaultValue = "2019-01-01" ) String createdDate ){
-		
-//		System.out.println("...........date.........."+date);
-		Employee ss = null;
-		 ss= employeeService.getEmployeeServiceByIdDate(id ,createdDate);
-		try {
-			
-//			     Date d=new Date(id);
-//			         
-				 if(ss==null){
-					 throw new RequestParamNotFoundException("Invalid url request not valid ........");
+	public ResponseEntity<Employee> getEmployeeDetails(
+				@RequestParam(value = "first_name"  ,required = false  ) String first_name,
+				@RequestParam(value = "createdDate" , required = false) String createdDate,
+				@RequestParam(value = "employee_id" ,required = false ) Integer employee_id
 				
+				){
+		
+		Employee objEmployee = null;
+		try {
+						     
+				if(createdDate!=null){
+						 
+					objEmployee=employeeService.getEmployeeByCreateDateService(createdDate);
+				   return new ResponseEntity(objEmployee,HttpStatus.OK); 
+				}
+				
+				if(first_name!=null){
+					
+					 return new ResponseEntity(first_name,HttpStatus.OK); 
+			   }
+				
+			   if(employee_id!=null){
 					 
-				 }
+					objEmployee=employeeService.getEmployeeByIdService(employee_id);
+					 return new ResponseEntity(objEmployee,HttpStatus.OK); 
+			   }
+				
+			   if(employee_id!=null  &&  createdDate!=null){
+			    	 
+				   objEmployee= employeeService.getEmployeeServiceByIdDate(employee_id ,createdDate);
+			    	 return new ResponseEntity(objEmployee,HttpStatus.OK); 
+			    	 
+			   } else{
+			    	 throw new RequestParamNotFoundException("Invalid url request not valid ........");
+			     }
+			     
+//				 if(ss==null){
+//					 throw new RequestParamNotFoundException("Invalid url request not valid ........");
+//				
+//					 
+//				 }
+				
 				 
 //				 if(id > 0){
 ////					 throw new RecordNotFoundException("Invalid employee id : " + id);
 //					 ss= employeeService.getEmployeeServiceByIdDate(id);
 //					 
 //				 }
-			         return new ResponseEntity(ss,HttpStatus.OK);
+//			         return new ResponseEntity(ss,HttpStatus.OK);
 		} catch (Exception e) {
 			logger.debug("Error adding LandingPageController", e);
 			         return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -191,4 +217,97 @@ private Logger logger=Logger.getLogger(LandingPageController.class);
 
 	       
 	}
+	
+	
+	
+	@PostMapping(value="userByIdDate")
+	public ResponseEntity<Employee> getEmployeeDetailsData(@RequestBody ObjectKey objectKey){
+		
+		Employee objEmployee = null;
+		try {
+			
+			
+			   if(objectKey.getEmployee_id()!=null  &&  objectKey.getCreatedDate()!=null){
+		    	 
+				   objEmployee= employeeService.getEmployeeServiceByIdDate(objectKey.getEmployee_id() ,objectKey.getCreatedDate());
+			    	 return new ResponseEntity(objEmployee,HttpStatus.OK); 
+			    	 
+			   }
+			   
+			   if(objectKey.getEmployee_id()!=null){
+					 
+					objEmployee=employeeService.getEmployeeByIdService(objectKey.getEmployee_id());
+					 return new ResponseEntity(objEmployee,HttpStatus.OK); 
+			   }
+						     
+				
+				
+				if(objectKey.getFirst_name()!=null){
+					
+					 return new ResponseEntity(objectKey.getFirst_name(),HttpStatus.OK); 
+			   }
+				
+			   if(objectKey.getCreatedDate()!=null){
+					 
+					objEmployee=employeeService.getEmployeeByCreateDateService(objectKey.getCreatedDate());
+				   return new ResponseEntity(objEmployee,HttpStatus.OK); 
+			   }
+				
+			  
+				
+			    else{
+			    	 throw new RequestParamNotFoundException("Invalid url request not valid ........");
+			     }
+			     
+//				 if(ss==null){
+//					 throw new RequestParamNotFoundException("Invalid url request not valid ........");
+//				
+//					 
+//				 }
+				
+				 
+//				 if(id > 0){
+////					 throw new RecordNotFoundException("Invalid employee id : " + id);
+//					 ss= employeeService.getEmployeeServiceByIdDate(id);
+//					 
+//				 }
+//			         return new ResponseEntity(ss,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("Error adding LandingPageController", e);
+			         return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+			 
+		}
+		
+	}
+	
+	
+	
+    @RequestMapping(value="/getempdetailsbyid/{id}" , method= RequestMethod.GET)
+//	@GetMapping(value="userId")
+	public ResponseEntity<Employee> getEmployeeDetails(@PathVariable Integer id){
+	
+    	Employee ee=null;
+    	
+    	try {
+			
+    		if( id!=null){  
+    			ee=employeeService.getEmployeeByIdService(id);
+        		
+    		  return new ResponseEntity(ee,HttpStatus.OK);
+    		}
+    		
+    		else{
+    			throw new RequestParamNotFoundException("Invalid url request not valid ........");
+    		}
+    		
+		} catch (Exception e) {
+			logger.debug("Error adding LandingPageController", e);
+	         return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    	
+    	
+    }
+	
+	
+	
 }

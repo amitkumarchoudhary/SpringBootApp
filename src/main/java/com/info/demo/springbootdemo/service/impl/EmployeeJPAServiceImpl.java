@@ -22,4 +22,18 @@ public class EmployeeJPAServiceImpl implements EmployeeJPAService{
 		return employeeDaoJPA.findAllUserDetails();
 	}
 
+
+	@Override
+	public List<Employee> findUserRegionByService(Integer region_id ) {
+		List<Employee> listofobj=employeeDaoJPA.findUserByRegionId(region_id);
+		return listofobj;
+	}
+
+
+	@Override
+	public List<Employee> findUserRegionByDefaultService() {
+		List<Employee> listofobj=employeeDaoJPA.findUserByRegionByDefault();
+		return listofobj;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.info.demo.SpringBootDemo;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class EmployeeDetailsControllerTest {
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/getAllEmployeeDetails"),
+				createURLWithPort("/employee/details"),
 				HttpMethod.GET, entity, String.class);
 
 		
@@ -44,8 +45,11 @@ public class EmployeeDetailsControllerTest {
 		JSONObject obj=new JSONObject();
 		obj.put("id", 123);
 		obj.put("name", "amit");
+		
+		JSONArray jarray=new JSONArray();
+		jarray.put(jarray);
 
-		JSONAssert.assertEquals(expectedJSON, response.getBody(), false);
+		JSONAssert.assertEquals(jarray.toString(), response.getBody(), false);
 	}
 	
 	

@@ -9,8 +9,9 @@ import com.info.demo.springbootdemo.form.EmployeeForm;
 
 public interface EmployeeService {
 
-	public Employee getEmployeeServiceByIdDate(int id ,String createdDate);
-	public Employee getEmployeeService(Integer id);
+	public Employee getEmployeeServiceByIdDate(int employee_id ,String createdDate);
+	public Employee getEmployeeByIdService(Integer employee_id);
+	public Employee getEmployeeByCreateDateService(String createdDate);
 	public List<Employee> getAllEmployeeService();
 	public void saveEmployeeService(EmployeeForm ee);
 	public void deleteEmployeeService(Integer ee);

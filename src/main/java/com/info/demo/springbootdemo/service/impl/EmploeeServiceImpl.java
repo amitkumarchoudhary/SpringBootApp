@@ -27,7 +27,7 @@ public class EmploeeServiceImpl implements EmployeeService{
 	
 	
 	@Override
-	public Employee getEmployeeService(Integer id) {
+	public Employee getEmployeeByIdService(Integer id) {
 		Employee ee=null;
 		
 		try {
@@ -70,10 +70,10 @@ public class EmploeeServiceImpl implements EmployeeService{
 	@Override
 	public void saveEmployeeService(EmployeeForm empForm) {
 		Employee ee=new Employee();
-		ee.setId(empForm.getId());
-		ee.setName(empForm.getName());
-		ee.setSalary(empForm.getSalary());
-		ee.setAddress(empForm.getAddress());
+//		ee.setId(empForm.getId());
+//		ee.setName(empForm.getName());
+//		ee.setSalary(empForm.getSalary());
+//		ee.setAddress(empForm.getAddress());
 		ee.setFilelocation(empForm.getFilelocation());
 		
 		employeeDao.save(ee);
@@ -90,12 +90,18 @@ public class EmploeeServiceImpl implements EmployeeService{
 	@Override
 	public void updateEmployeeService(EmployeeForm empForm) {
 		Employee ee=new Employee();
-		ee.setId(empForm.getId());
-		ee.setName(empForm.getName());
-		ee.setSalary(empForm.getSalary());
-		ee.setAddress(empForm.getAddress());
+//		ee.setId(empForm.getId());
+//		ee.setName(empForm.getName());
+//		ee.setSalary(empForm.getSalary());
+//		ee.setAddress(empForm.getAddress());
 		employeeDao.save(ee);
 		
+	}
+
+	@Override
+	public Employee getEmployeeByCreateDateService(String createdDate) {
+		
+		return employeeDao.findUserByCreateDate(createdDate);
 	}
 
 	
